@@ -8,6 +8,10 @@ import (
 
 // Proxy interface of dbtag ability
 type Proxy interface {
+	// GetColsWithOmit input selectors you wanna omit
+	GetColsWithOmit(selectors ...string) []string
+	// GetColsWithSelect input selectors you wanna select
+	GetColsWithSelect(selectors ...string) []string
 }
 
 type instance struct {
@@ -18,7 +22,7 @@ type instance struct {
 
 var ErrStructFieldEmpty = errors.New("empty field in the sample")
 
-func New(sample interface{}) (*instance, error) {
+func New(sample interface{}) (Proxy, error) {
 	elems := reflect.TypeOf(sample).Elem()
 	fieldNum := elems.NumField()
 	if fieldNum <= 0 {

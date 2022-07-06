@@ -31,7 +31,7 @@ func TestNew(t *testing.T) {
 	tests := []struct {
 		name string
 		args args
-		want *instance
+		want Proxy
 	}{
 		{
 			name: "general test",
@@ -42,8 +42,8 @@ func TestNew(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got, _ := New(tt.args.sample); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("New() = %v, want %v", got, tt.want)
+			if _, err := New(tt.args.sample); err != nil {
+				t.Errorf("err: %v", err)
 			}
 		})
 	}
